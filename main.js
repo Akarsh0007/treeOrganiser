@@ -81,10 +81,13 @@ function treehelper(dirpath, indent) {
     if (fs.lstatSync(dirpath).isFile()) console.log(indent + " |-- " + path.basename(dirpath));
     else {
         let dirname = path.basename(dirpath);
-        console.log(indent + " /-- " + dirname);
-        let childern = fs.readdirSync(dirname);
-        for (let i = 0; i < childern.length; i++)
-            treehelper(path.join(dirpath, childern[i]), indent + "/t");
-        
+        if(dirname.charAt(0) !== "."){
+            console.log(indent + " /-- " + dirname);
+        }
+        let children = fs.readdirSync(__dirname);
+        for (let i = 0; i < children.length; i++)
+        if(dirname.charAt(0) !== '.') {
+            treehelper(path.join(dirpath, children[i]), indent + " " );
+        }
     }
 }
